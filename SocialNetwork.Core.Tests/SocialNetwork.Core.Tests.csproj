@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Helpers\PostWithFixedDateTime.cs" />
     <Compile Include="Post_Tests.cs" />
+    <Compile Include="Timeline_Tests.cs" />
     <Compile Include="User_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
