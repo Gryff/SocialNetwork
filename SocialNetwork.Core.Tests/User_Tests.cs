@@ -13,6 +13,8 @@ namespace SocialNetwork.Core.Tests
             User user = new User(testName);
 
             Assert.AreEqual(testName, user.Name);
+            Assert.IsInstanceOfType(user.Timeline, typeof(Timeline));
+            Assert.AreEqual(0, user.Following.Count);
         }
     }
 }
