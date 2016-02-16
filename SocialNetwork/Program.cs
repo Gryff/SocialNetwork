@@ -8,9 +8,9 @@ namespace SocialNetwork
 {
     class Program
     {
-        private static readonly List<User> Users = new List<User>(); 
+        private static readonly List<User> Users = new List<User>();
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Console.WriteLine("Welcome to my social network");
             Console.WriteLine("To post a message follow the format {name} -> {message}");
@@ -19,23 +19,44 @@ namespace SocialNetwork
             {
                 string userInput = Console.ReadLine();
 
-                string[] parsedInput = Regex.Split(userInput, @" -> ");
+                if (userInput.Contains("->"))
+                    PostMessage(userInput);
 
-                User user = Users.FirstOrDefault(u => u.Name == parsedInput[0]);
-
-                if (user != null)
-                {
-                    user.Timeline.AddPost(new Post(parsedInput[1]));
-                }
-                else
-                {
-                    User newUser = new User(parsedInput[0]);
-
-                    Users.Add(newUser);
-
-                    newUser.Timeline.AddPost(new Post(parsedInput[1]));
-                }
+                else if (!userInput.Contains(" "))
+                    DisplayTimeline(userInput);
             }
+
+        }
+
+        private static void PostMessage(string userInput)
+        {
+            string[] parsedInput = Regex.Split(userInput, @" -> ");
+
+            User user = Users.FirstOrDefault(u => u.Name == parsedInput[0]);
+
+            if (user != null)
+            {
+                user.Timeline.AddPost(new Post(parsedInput[1]));
+            }
+            else
+            {
+                User newUser = new User(parsedInput[0]);
+
+                Users.Add(newUser);
+
+                newUser.Timeline.AddPost(new Post(parsedInput[1]));
+            }
+        }
+
+        private static void DisplayTimeline(string userInput)
+        {
+            User user = Users.FirstOrDefault(u => u.Name == userInput);
+
+            if (user == null) return;
+
+            IEnumerable<string> userTimeline = user.Timeline.GetTimeline().Reverse();
+
+            Console.WriteLine(string.Join("\n", userTimeline));
         }
     }
 }
