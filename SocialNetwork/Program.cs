@@ -22,12 +22,15 @@ namespace SocialNetwork
                 if (userInput.Contains("->"))
                     PostMessage(userInput);
 
+                else if (userInput.Contains("follows"))
+                    AddUserToFollowingForUser(userInput);
+
                 else if (!userInput.Contains(" "))
                     DisplayTimeline(userInput);
             }
 
         }
-
+        
         private static void PostMessage(string userInput)
         {
             string[] parsedInput = Regex.Split(userInput, @" -> ");
@@ -57,6 +60,18 @@ namespace SocialNetwork
             IEnumerable<string> userTimeline = user.Timeline.GetTimeline().Reverse();
 
             Console.WriteLine(string.Join("\n", userTimeline));
+        }
+
+
+        private static void AddUserToFollowingForUser(string userInput)
+        {
+            string[] parsedInput = Regex.Split(userInput, " follows ");
+
+            User user = Users.FirstOrDefault(u => u.Name == parsedInput[0]);
+
+            User userToFollow = Users.FirstOrDefault(u => u.Name == parsedInput[1]);
+
+            user?.Following.Add(userToFollow ?? new User(parsedInput[1]));
         }
     }
 }
