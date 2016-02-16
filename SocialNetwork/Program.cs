@@ -71,7 +71,8 @@ namespace SocialNetwork
 
             User userToFollow = Users.FirstOrDefault(u => u.Name == parsedInput[1]);
 
-            user?.Following.Add(userToFollow ?? new User(parsedInput[1]));
+            if (userToFollow != null)
+                user?.Following.Add(userToFollow);
         }
     }
 }
