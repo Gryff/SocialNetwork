@@ -14,5 +14,14 @@ namespace SocialNetwork.Core
             this.Content = content;
             this.PostedDateTime = DateTime.UtcNow;
         }
+
+        public string ToOutputFormat()
+        {
+            int minutesAgo = (DateTime.UtcNow - this.PostedDateTime).Minutes;
+
+            string plural = minutesAgo == 1 ? string.Empty : "s";
+
+            return $"{this.Content} ({minutesAgo} minute{plural} ago)";
+        }
     }
 }

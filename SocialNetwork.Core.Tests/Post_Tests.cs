@@ -18,5 +18,27 @@ namespace SocialNetwork.Core.Tests
             Assert.AreEqual(testMessage, mockPost.Content);
             Assert.AreEqual(mockPostedDateTime, mockPost.PostedDateTime);
         }
+
+        [TestMethod]
+        public void ToOutputFormat_returns_output_friendly_Post()
+        {
+            string testMessage = "Everything is awesome";
+
+            Post testPost = new Post(testMessage);
+            
+            Assert.AreEqual($"{testMessage} (0 minutes ago)", testPost.ToOutputFormat());
+        }
+
+        [TestMethod]
+        public void ToOutputFormat_returns_correct_grammar_for_post_one_minute_ago()
+        {
+            string testMessage = "Everything may or may not be awesome";
+
+            PostWithFixedDateTime postOneMinuteAgo = new PostWithFixedDateTime(
+                testMessage,
+                DateTime.UtcNow.AddMinutes(-1));
+            
+            Assert.AreEqual($"{testMessage} (1 minute ago)", postOneMinuteAgo.ToOutputFormat());
+        }
     }
 }

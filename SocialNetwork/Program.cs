@@ -25,6 +25,9 @@ namespace SocialNetwork
                 else if (userInput.Contains("follows"))
                     AddUserToFollowingForUser(userInput);
 
+                else if (userInput.Contains("wall"))
+                    DisplayWall(userInput);
+
                 else if (!userInput.Contains(" "))
                     DisplayTimeline(userInput);
             }
@@ -39,7 +42,7 @@ namespace SocialNetwork
 
             if (user != null)
             {
-                user.Timeline.AddPost(new Post(parsedInput[1]));
+                user.Timeline.Posts.Add(new Post(parsedInput[1]));
             }
             else
             {
@@ -47,7 +50,7 @@ namespace SocialNetwork
 
                 Users.Add(newUser);
 
-                newUser.Timeline.AddPost(new Post(parsedInput[1]));
+                newUser.Timeline.Posts.Add(new Post(parsedInput[1]));
             }
         }
 
@@ -59,7 +62,7 @@ namespace SocialNetwork
 
             IEnumerable<string> userTimeline = user.Timeline.GetTimeline().Reverse();
 
-            Console.WriteLine(string.Join("\n", userTimeline));
+            Console.WriteLine(string.Join(Environment.NewLine, userTimeline));
         }
 
 
@@ -72,7 +75,36 @@ namespace SocialNetwork
             User userToFollow = Users.FirstOrDefault(u => u.Name == parsedInput[1]);
 
             if (userToFollow != null)
+            {
                 user?.Following.Add(userToFollow);
+            }
+                
+        }
+
+        private static void DisplayWall(string userInput)
+        {
+            string[] parsedInput = Regex.Split(userInput, " wall");
+
+            User user = Users.FirstOrDefault(u => u.Name == parsedInput[0]);
+
+            if (user == null) return;
+
+            List<Tuple<string, Post>> wall = new List<Tuple<string, Post>>();
+
+            wall.AddRange(user.Timeline.Posts.Select(
+                post => new Tuple<string, Post>(user.Name, post)));
+
+            foreach (User u in user.Following)
+            {
+                wall.AddRange(
+                    u.Timeline.Posts.Select(
+                        post => new Tuple<string, Post>(u.Name, post)));
+            }
+            
+            foreach (Tuple<string, Post> p in wall.OrderByDescending(t => t.Item2.PostedDateTime))
+            {
+                Console.WriteLine($"{p.Item1} - {p.Item2.ToOutputFormat()}");
+            }
         }
     }
 }
