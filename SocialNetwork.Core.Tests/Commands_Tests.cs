@@ -136,5 +136,25 @@ namespace SocialNetwork.Core.Tests
                 "Bob - how is everyone? (10 minutes ago)",
                 wall);
         }
+
+        [TestMethod]
+        public void DetermineCommandType_returns_expected_CommandTypes()
+        {
+            Assert.AreEqual(
+                CommandType.Post, 
+                Commands.DetermineCommandType("Bob -> need a new book"));
+
+            Assert.AreEqual(
+                CommandType.Follow, 
+                Commands.DetermineCommandType("Bob follows Rupert"));
+
+            Assert.AreEqual(
+                CommandType.Timeline,
+                Commands.DetermineCommandType("Rupert"));
+
+            Assert.AreEqual(
+                CommandType.Wall,
+                Commands.DetermineCommandType("Alice wall"));
+        }
     }
 }

@@ -80,5 +80,19 @@ namespace SocialNetwork.Core
 
             return string.Join(Environment.NewLine, result);
         }
+
+        public static CommandType DetermineCommandType(string userInput)
+        {
+            if (userInput.Contains("->"))
+                return CommandType.Post;
+
+            if (userInput.Contains("follows"))
+                return CommandType.Follow;
+
+            if (userInput.Contains("wall"))
+                return CommandType.Wall;
+
+            return CommandType.Timeline;
+        }
     }
 }
