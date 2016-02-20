@@ -9,6 +9,7 @@ The User is created if it doesn't already exist.
 A User has the ability to see their Posts by typing their name at the input. For example:
 
 `> Liam -> everything is awesome!`
+
 `> Liam`
 
 `everything is awesome! (0 minutes ago)`
@@ -17,21 +18,30 @@ A User has the ability to see their Posts by typing their name at the input. For
 A User can follow another User by inputting `{User} follows {User}`.
 
 `> Liam -> everything is awesome!`
+
 `> Joe -> everything could be awesome, research not complete`
+
 `> Liam follows Joe` -- Liam is now following Joe
 
 ### Wall
 A User has the ability to see all Posts from itself and Users it is following via the Wall command.
 
 `> Liam -> everything is awesome!`
+
 `> Joe -> everything could be awesome, research not complete`
+
 `> Liam follows Joe`
+
 `> Sarah -> new research indicates some things may not be awesome`
+
 `> Liam follows Sarah`
+
 `> Liam wall`
 
 `Sarah - new research indicates some things may not be awesome (0 minutes ago)`
+
 `Joe - everything could be awesome, research not complete (5 minutes ago)`
+
 `Liam - everything is awesome! (7 minutes ago)`
 
 ### Classes
