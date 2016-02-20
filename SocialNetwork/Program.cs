@@ -17,19 +17,27 @@ namespace SocialNetwork
             {
                 string userInput = Console.ReadLine();
 
-                if (userInput.Contains("->"))
-                    Commands.PostMessage(userInput, Users);
+                CommandType commandType = Commands.DetermineCommandType(userInput);
 
-                else if (userInput.Contains("follows"))
-                    Commands.AddUserToFollowingForUser(userInput, Users);
+                switch (commandType)
+                {
+                    case CommandType.Post:
+                        Commands.PostMessage(userInput, Users);
+                        break;
 
-                else if (userInput.Contains("wall"))
-                    Console.WriteLine(Commands.GetWall(userInput, Users));
+                    case CommandType.Follow:
+                        Commands.AddUserToFollowingForUser(userInput, Users);
+                        break;
 
-                else if (!userInput.Contains(" "))
-                    Console.WriteLine(Commands.GetFormattedTimeline(userInput, Users));
+                    case CommandType.Timeline:
+                        Console.WriteLine(Commands.GetFormattedTimeline(userInput, Users));
+                        break;
+
+                    case CommandType.Wall:
+                        Console.WriteLine(Commands.GetWall(userInput, Users));
+                        break;
+                }
             }
-
         }
     }
 }
