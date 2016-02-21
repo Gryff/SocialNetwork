@@ -17,11 +17,30 @@ namespace SocialNetwork.Core
 
         public string ToOutputFormat()
         {
-            int minutesAgo = (DateTime.UtcNow - this.PostedDateTime).Minutes;
+            string timeAgo = this.GetPostTimeSuffix(DateTime.UtcNow - this.PostedDateTime);
 
-            string plural = minutesAgo == 1 ? string.Empty : "s";
-
-            return $"{this.Content} ({minutesAgo} minute{plural} ago)";
+            return $"{this.Content} ({timeAgo})";
         }
+
+        private string GetPostTimeSuffix(TimeSpan timeSpan)
+        {
+            if (timeSpan.TotalSeconds < 60)
+                return $"{Math.Round(timeSpan.TotalSeconds)} " + 
+                    $"second{this.GetPlural(timeSpan.TotalSeconds)} ago";
+
+            if(timeSpan.TotalMinutes < 60)
+                return $"{Math.Round(timeSpan.TotalMinutes)} " +
+                    $"minute{this.GetPlural(timeSpan.TotalMinutes)} ago";
+
+            if (timeSpan.TotalHours < 24)
+                return $"{Math.Round(timeSpan.TotalHours)} " +
+                       $"hour{this.GetPlural(timeSpan.TotalHours)} ago";
+
+            else
+                return $"{Math.Round(timeSpan.TotalDays)} " +
+                       $"day{this.GetPlural(timeSpan.TotalDays)} ago";
+        }
+
+        private string GetPlural(double number) => Math.Round(number) == 1 ? "" : "s";
     }
 }

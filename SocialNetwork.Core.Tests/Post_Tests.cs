@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SocialNetwork.Core.Tests.Helpers;
 
 namespace SocialNetwork.Core.Tests
 {
@@ -13,7 +12,11 @@ namespace SocialNetwork.Core.Tests
             string testMessage = "Good morning everyone!";
             DateTime mockPostedDateTime = DateTime.UtcNow;
 
-            PostWithFixedDateTime mockPost = new PostWithFixedDateTime(testMessage, mockPostedDateTime);
+            Post mockPost = new Post
+            {
+                Content = testMessage,
+                PostedDateTime = mockPostedDateTime
+            };
 
             Assert.AreEqual(testMessage, mockPost.Content);
             Assert.AreEqual(mockPostedDateTime, mockPost.PostedDateTime);
@@ -26,7 +29,7 @@ namespace SocialNetwork.Core.Tests
 
             Post testPost = new Post(testMessage);
             
-            Assert.AreEqual($"{testMessage} (0 minutes ago)", testPost.ToOutputFormat());
+            Assert.AreEqual($"{testMessage} (0 seconds ago)", testPost.ToOutputFormat());
         }
 
         [TestMethod]
@@ -34,11 +37,54 @@ namespace SocialNetwork.Core.Tests
         {
             string testMessage = "Everything may or may not be awesome";
 
-            PostWithFixedDateTime postOneMinuteAgo = new PostWithFixedDateTime(
-                testMessage,
-                DateTime.UtcNow.AddMinutes(-1));
+            Post postOneMinuteAgo = new Post
+            {
+                Content = testMessage,
+                PostedDateTime = DateTime.UtcNow.AddMinutes(-1)
+            };
             
             Assert.AreEqual($"{testMessage} (1 minute ago)", postOneMinuteAgo.ToOutputFormat());
+        }
+
+        [TestMethod]
+        public void ToOutPutFormat_returns_appropriate_time_units()
+        {
+            string testMessageSeconds = "Good morning world";
+            string testMessageMinutes = "Good night world";
+            string testMessageHours   = "Good afternoon world";
+            string testMessageDays    = "Good evening world";
+
+            Post testPostSeconds = new Post
+            {
+                Content = testMessageSeconds,
+                PostedDateTime = DateTime.UtcNow.AddSeconds(-5)
+            };
+
+            Assert.AreEqual($"{testMessageSeconds} (5 seconds ago)", testPostSeconds.ToOutputFormat());
+
+            Post testPostMinutes = new Post
+            {
+                Content = testMessageMinutes,
+                PostedDateTime = DateTime.UtcNow.AddMinutes(-7)
+            };
+
+            Assert.AreEqual($"{testMessageMinutes} (7 minutes ago)", testPostMinutes.ToOutputFormat());
+
+            Post testPostHours = new Post
+            {
+                Content = testMessageHours,
+                PostedDateTime = DateTime.UtcNow.AddHours(-1)
+            };
+
+            Assert.AreEqual($"{testMessageHours} (1 hour ago)", testPostHours.ToOutputFormat());
+
+            Post testPostDays = new Post
+            {
+                Content = testMessageDays,
+                PostedDateTime = DateTime.UtcNow.AddDays(-9)
+            };
+
+            Assert.AreEqual($"{testMessageDays} (9 days ago)", testPostDays.ToOutputFormat());
         }
     }
 }
