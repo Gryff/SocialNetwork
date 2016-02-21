@@ -117,7 +117,7 @@ namespace SocialNetwork.Core.Tests
                 PostedDateTime = DateTime.UtcNow.AddMinutes(-5)
             });
 
-            await Task.Delay(100);
+            await Task.Delay(50);
 
             alice.Timeline.Posts.Add(new Post("need coffee"));
 
