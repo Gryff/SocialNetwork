@@ -53,3 +53,14 @@ A User has the ability to see all Posts from itself and Users it is following vi
 
 **Commands** - A collection of static methods to deal with all possible user commands
 
+
+### Build instructions
+- Clone the repository to your machine.
+
+- Either
+  - Open **SocialNetwork.sln** in Visual Studio
+  - Hit F5
+- Or, if you don't want to use VS
+  - In a command window
+  - `C:\Windows\Microsoft.NET\Framework\{your .NET version}\MSBuild "C:\Path\To\SocialNetwork\SocialNetwork.sln"`
+  - `C:\Path\To\SocialNetwork\SocialNetwork\SocialNetwork\bin\{Debug or Release}\SocialNetwork.exe`
