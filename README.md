@@ -56,7 +56,7 @@ A User has the ability to see all Posts from itself and Users it is following vi
 
 ----------
 
-### Build instructions
+### Build and run instructions
 - Clone the repository to your machine.
 
 - Either
