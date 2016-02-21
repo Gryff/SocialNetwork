@@ -51,3 +51,5 @@ A User has the ability to see all Posts from itself and Users it is following vi
 
 **Timeline** - In-memory store for Posts
 
+**Commands** - A collection of static methods to deal with all possible user commands
+
