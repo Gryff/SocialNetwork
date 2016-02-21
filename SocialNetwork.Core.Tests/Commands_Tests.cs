@@ -69,7 +69,7 @@ namespace SocialNetwork.Core.Tests
             string result = Commands.GetFormattedTimeline(testUserInput, testUsers);
 
             Assert.AreEqual(
-                $"not feeling so great today (0 minutes ago){Environment.NewLine}" +
+                $"not feeling so great today (0 seconds ago){Environment.NewLine}" +
                     "good night last night (10 minutes ago)", 
                 result);
         }
@@ -130,8 +130,8 @@ namespace SocialNetwork.Core.Tests
             string wall = Commands.GetWall(testUserIput, testUsers);
 
             Assert.AreEqual(
-                $"Alice - need coffee (0 minutes ago){Environment.NewLine}" +
-                $"Bob - I'm feeling rough (0 minutes ago){Environment.NewLine}" +
+                $"Alice - need coffee (0 seconds ago){Environment.NewLine}" +
+                $"Bob - I'm feeling rough (0 seconds ago){Environment.NewLine}" +
                 $"Alice - up bright and early today (5 minutes ago){Environment.NewLine}" +
                 "Bob - how is everyone? (10 minutes ago)",
                 wall);
