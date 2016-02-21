@@ -62,21 +62,28 @@ namespace SocialNetwork.Core
 
             if (user == null) return "";
 
-            List<Tuple<string, Post>> wall = new List<Tuple<string, Post>>();
+            List<dynamic> wallPosts = new List<dynamic>();
 
-            wall.AddRange(user.Timeline.Posts.Select(
-                post => new Tuple<string, Post>(user.Name, post)));
+            wallPosts.AddRange(user.Timeline.Posts.Select( post =>
+                new
+                {
+                    user.Name,
+                    Post = post
+                }));
 
             foreach (User u in user.Following)
             {
-                wall.AddRange(
-                    u.Timeline.Posts.Select(
-                        post => new Tuple<string, Post>(u.Name, post)));
+                wallPosts.AddRange(u.Timeline.Posts.Select(post =>
+                    new
+                    {
+                        u.Name,
+                        Post = post
+                    }));
             }
 
-            IEnumerable<string> result = wall
-                .OrderByDescending(t => t.Item2.PostedDateTime)
-                .Select(p => $"{p.Item1} - {p.Item2.ToOutputFormat()}");
+            IEnumerable<string> result = wallPosts
+                .OrderByDescending(p => p.Post.PostedDateTime)
+                .Select(p => $"{p.Name} - {p.Post.ToOutputFormat()}");
 
             return string.Join(Environment.NewLine, result);
         }
